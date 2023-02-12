@@ -1,11 +1,16 @@
 package com.hfad.task1;
 
+import static com.hfad.task1.Revers.reverse;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import kotlin.text.Regex;
 
@@ -27,6 +32,11 @@ public class AnagramActivity extends Activity implements View.OnClickListener {
         convert.setOnClickListener(this::onClick);
 
 
+        if(savedInstanceState != null){
+           builder = (StringBuilder) savedInstanceState.getCharSequence("build");
+            textAnagram.setText(builder);
+        }
+
     }
 
 
@@ -41,22 +51,26 @@ public class AnagramActivity extends Activity implements View.OnClickListener {
 
         char[] fi = first.toCharArray();
         char[] se = second.toCharArray();
-        ion.reverse(fi);
+        reverse(fi);
         String rav = new String(fi);
         builder.append(rav);
 
         textAnagram.setText(builder);
 
 
-
-
-
-
-
-        }
-
-
     }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putCharSequence("build", builder);
+    }
+}
+
+
+
 
 
 
